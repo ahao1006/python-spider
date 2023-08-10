@@ -2,6 +2,7 @@ import requests
 import re
 import os
 
+# 如果目录不存在,则创建目录
 dir = './music/'
 if not os.path.exists(dir):
     os.mkdir(dir)
@@ -12,8 +13,13 @@ headers = {
     "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
 }
 response = requests.get(url = url, headers = headers)
-music_html = re.findall('<li><a href="/song\?id=(\d+)">(.*?)</a></li>', response.text)
 
+# 将放回的地址写入文件，方便进行信息提取
+# with open('music_html.html', 'w') as f:
+#     f.write(response.text)
+
+# 正则表达式规则
+music_html = re.findall('<li><a href="/song\?id=(\d+)">(.*?)</a></li>', response.text)
 
 for music_id, music_name in music_html:
     # 下载音乐地址
